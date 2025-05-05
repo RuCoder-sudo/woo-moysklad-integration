@@ -709,74 +709,107 @@ $status_mapping = get_option('woo_moysklad_order_status_mapping', array());
         <form method="post" action="options.php">
             <?php settings_fields('woo_moysklad_bonus_settings'); ?>
             
-            <h2><?php _e('Настройки интеграции с плагином "Бонусы для Woo"', 'woo-moysklad-integration'); ?></h2>
-            
-            <p>
-                <?php _e('Данный раздел позволяет настроить интеграцию с плагином "Бонусы для Woo" для передачи информации о бонусных баллах клиентов в МойСклад.', 'woo-moysklad-integration'); ?>
+            <h2><?php _e('Настройки интеграции с бонусной системой', 'woo-moysklad-integration'); ?></h2>
+            <p class="description">
+                <?php _e('Укажите настройки интеграции между плагином "Bonus for Woo" и МойСклад. Для работы необходимо создать атрибуты в МойСклад.', 'woo-moysklad-integration'); ?>
             </p>
             
             <table class="form-table">
                 <tr>
                     <th scope="row">
-                        <label for="woo_moysklad_bonus_integration_enabled"><?php _e('Включить интеграцию с бонусами', 'woo-moysklad-integration'); ?></label>
+                        <label for="woo_moysklad_bonus_integration_enabled">
+                            <?php _e('Включить интеграцию с бонусами', 'woo-moysklad-integration'); ?>
+                        </label>
                     </th>
                     <td>
-                        <input type="checkbox" id="woo_moysklad_bonus_integration_enabled" name="woo_moysklad_bonus_integration_enabled" value="1" 
-                               <?php checked('1', get_option('woo_moysklad_bonus_integration_enabled', '0')); ?>>
+                        <input 
+                            type="checkbox" 
+                            id="woo_moysklad_bonus_integration_enabled" 
+                            name="woo_moysklad_bonus_integration_enabled" 
+                            value="1" 
+                            <?php checked('1', get_option('woo_moysklad_bonus_integration_enabled', '0')); ?> 
+                        />
                         <p class="description">
-                            <?php _e('Включить интеграцию с плагином "Бонусы для Woo".', 'woo-moysklad-integration'); ?>
+                            <?php _e('Включить передачу данных о бонусах в МойСклад при синхронизации заказов', 'woo-moysklad-integration'); ?>
                         </p>
                     </td>
                 </tr>
                 
                 <tr>
                     <th scope="row">
-                        <label for="woo_moysklad_bonus_used_attribute_id"><?php _e('ID атрибута использованных бонусов', 'woo-moysklad-integration'); ?></label>
+                        <label for="woo_moysklad_used_bonus_attribute_id">
+                            <?php _e('ID атрибута для использованных бонусов', 'woo-moysklad-integration'); ?>
+                        </label>
                     </th>
                     <td>
-                        <input type="text" id="woo_moysklad_bonus_used_attribute_id" name="woo_moysklad_bonus_used_attribute_id" 
-                               value="<?php echo esc_attr(get_option('woo_moysklad_bonus_used_attribute_id', '6af5c95b-f91b-11eb-0a80-0656000e3f2c')); ?>" class="regular-text">
+                        <input 
+                            type="text" 
+                            id="woo_moysklad_used_bonus_attribute_id" 
+                            name="woo_moysklad_used_bonus_attribute_id" 
+                            value="<?php echo esc_attr(get_option('woo_moysklad_used_bonus_attribute_id', '')); ?>" 
+                            class="regular-text"
+                        />
                         <p class="description">
-                            <?php _e('ID атрибута в МойСклад для хранения использованных бонусов в заказе.', 'woo-moysklad-integration'); ?>
+                            <?php _e('ID атрибута МойСклад для сохранения использованных бонусов (например, ae9d3a71-29b2-11f0-0a80-0ef900c420c2)', 'woo-moysklad-integration'); ?>
                         </p>
                     </td>
                 </tr>
                 
                 <tr>
                     <th scope="row">
-                        <label for="woo_moysklad_bonus_earned_attribute_id"><?php _e('ID атрибута начисленных бонусов', 'woo-moysklad-integration'); ?></label>
+                        <label for="woo_moysklad_earned_bonus_attribute_id">
+                            <?php _e('ID атрибута для начисленных бонусов', 'woo-moysklad-integration'); ?>
+                        </label>
                     </th>
                     <td>
-                        <input type="text" id="woo_moysklad_bonus_earned_attribute_id" name="woo_moysklad_bonus_earned_attribute_id" 
-                               value="<?php echo esc_attr(get_option('woo_moysklad_bonus_earned_attribute_id', '7bc8dfbb-f91b-11eb-0a80-0656000e3f2d')); ?>" class="regular-text">
+                        <input 
+                            type="text" 
+                            id="woo_moysklad_earned_bonus_attribute_id" 
+                            name="woo_moysklad_earned_bonus_attribute_id" 
+                            value="<?php echo esc_attr(get_option('woo_moysklad_earned_bonus_attribute_id', '')); ?>" 
+                            class="regular-text"
+                        />
                         <p class="description">
-                            <?php _e('ID атрибута в МойСклад для хранения начисленных бонусов в заказе.', 'woo-moysklad-integration'); ?>
+                            <?php _e('ID атрибута МойСклад для сохранения начисленных бонусов (например, aee84e1a-29b2-11f0-0a80-03d300c67e01)', 'woo-moysklad-integration'); ?>
                         </p>
                     </td>
                 </tr>
                 
                 <tr>
                     <th scope="row">
-                        <label for="woo_moysklad_bonus_balance_attribute_id"><?php _e('ID атрибута баланса бонусов', 'woo-moysklad-integration'); ?></label>
+                        <label for="woo_moysklad_balance_bonus_attribute_id">
+                            <?php _e('ID атрибута для баланса бонусов', 'woo-moysklad-integration'); ?>
+                        </label>
                     </th>
                     <td>
-                        <input type="text" id="woo_moysklad_bonus_balance_attribute_id" name="woo_moysklad_bonus_balance_attribute_id" 
-                               value="<?php echo esc_attr(get_option('woo_moysklad_bonus_balance_attribute_id', '8c24e9bb-f91b-11eb-0a80-0656000e3f2e')); ?>" class="regular-text">
+                        <input 
+                            type="text" 
+                            id="woo_moysklad_balance_bonus_attribute_id" 
+                            name="woo_moysklad_balance_bonus_attribute_id" 
+                            value="<?php echo esc_attr(get_option('woo_moysklad_balance_bonus_attribute_id', '')); ?>" 
+                            class="regular-text"
+                        />
                         <p class="description">
-                            <?php _e('ID атрибута в МойСклад для хранения текущего баланса бонусов у клиента.', 'woo-moysklad-integration'); ?>
+                            <?php _e('ID атрибута МойСклад для сохранения текущего баланса бонусов (например, aef3c79b-29b2-11f0-0a80-042200c4e142)', 'woo-moysklad-integration'); ?>
                         </p>
                     </td>
                 </tr>
             </table>
-            
-            <div id="bonus-integration-status"></div>
+
+            <div class="woo-moysklad-bonus-attributes">
+                <h3><?php _e('Создание атрибутов в МойСклад', 'woo-moysklad-integration'); ?></h3>
+                <p>
+                    <?php _e('Кнопка ниже автоматически создаст необходимые атрибуты в МойСклад для хранения информации о бонусах', 'woo-moysklad-integration'); ?>
+                </p>
+                <button type="button" id="register_bonus_attributes" class="button button-primary" data-nonce="<?php echo wp_create_nonce('woo_moysklad_register_bonus_attributes'); ?>">
+                    <?php _e('Создать атрибуты в МойСклад', 'woo-moysklad-integration'); ?>
+                </button>
+                <div class="response-message"></div>
+            </div>
             
             <p class="submit">
                 <button type="submit" class="button button-primary">
-                    <?php _e('Сохранить настройки бонусов', 'woo-moysklad-integration'); ?>
-                </button>
-                <button type="button" id="register-bonus-attributes-button" class="button">
-                    <?php _e('Создать атрибуты в МойСклад', 'woo-moysklad-integration'); ?>
+                    <?php _e('Сохранить настройки', 'woo-moysklad-integration'); ?>
                 </button>
             </p>
             

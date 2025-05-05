@@ -760,6 +760,57 @@
     }
     
     /**
+     * Setup bonus attributes registration buttons
+     */
+    function setupBonusAttributes() {
+        $('#register_bonus_attributes').on('click', function(e) {
+            e.preventDefault();
+            
+            var $button = $(this);
+            var $responseContainer = $button.closest('.woo-moysklad-bonus-attributes').find('.response-message');
+            
+            $button.prop('disabled', true).addClass('loading');
+            $responseContainer.html('<div class="notice notice-info inline"><p>Создание атрибутов бонусов в МойСклад...</p></div>');
+            
+            $.ajax({
+                url: wooMoySkladAdmin.ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'register_bonus_attributes',
+                    nonce: $button.data('nonce') || wooMoySkladAdmin.nonce
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $responseContainer.html('<div class="notice notice-success inline"><p>' + response.data.message + '</p></div>');
+                        
+                        // Обновляем ID атрибутов, если они вернулись
+                        if (response.data.attributes) {
+                            if (response.data.attributes.used_bonus_id) {
+                                $('#woo_moysklad_used_bonus_attribute_id').val(response.data.attributes.used_bonus_id);
+                            }
+                            if (response.data.attributes.earned_bonus_id) {
+                                $('#woo_moysklad_earned_bonus_attribute_id').val(response.data.attributes.earned_bonus_id);
+                            }
+                            if (response.data.attributes.balance_bonus_id) {
+                                $('#woo_moysklad_balance_bonus_attribute_id').val(response.data.attributes.balance_bonus_id);
+                            }
+                        }
+                    } else {
+                        $responseContainer.html('<div class="notice notice-error inline"><p>' + 
+                            (response.data.message || 'Ошибка при создании атрибутов. Проверьте логи для получения подробностей.') + '</p></div>');
+                    }
+                },
+                error: function() {
+                    $responseContainer.html('<div class="notice notice-error inline"><p>Ошибка при создании атрибутов. Проверьте соединение с сервером.</p></div>');
+                },
+                complete: function() {
+                    $button.prop('disabled', false).removeClass('loading');
+                }
+            });
+        });
+    }
+
+    /**
      * Initialize on DOM ready
      */
     $(function() {
@@ -770,6 +821,7 @@
         setupConnectionTest();
         setupWebhookRegistration();
         setupLogs();
+        setupBonusAttributes();
         
         // Initial sync status check
         if (wooMoySkladAdmin.syncInProgress === '1') {
